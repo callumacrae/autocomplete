@@ -21,6 +21,7 @@ $.fn.autocomplete = function (options) {
 	}
 
 	options = $.extend({}, {
+		callback: false, // Callback for if something is autocompleted
 		caseSensitive: false, // Case sensitive?
 		maxWords: 10, // List will not display if more words than this
 		minChars: 1, // Minimum characters to autocomplete on
@@ -126,6 +127,11 @@ $.fn.autocomplete = function (options) {
 		// the last part.
 		text = text.slice(0, data.cursor - data.word.length) +
 			value + text.slice(data.cursor);
+
+		if ($.isFunction(options.callback)) {
+			options.callback.call(this, value, $textarea.val(), text);
+		}
+
 		$textarea.val(text)
 			.focus();
 
