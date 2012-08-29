@@ -22,6 +22,7 @@ $.fn.autocomplete = function (options) {
 
 	options = $.extend({}, {
 		caseSensitive: false, // Case sensitive?
+		maxWords: 10, // List will not display if more words than this
 		minChars: 1, // Minimum characters to autocomplete on
 		operator: '', // Operator to put before words to be autocompleted
 		words: [] // Words to be autocompleted (alphanumeric only)
@@ -78,7 +79,7 @@ $.fn.autocomplete = function (options) {
 			}
 		});
 
-		if (finalWords.length) {
+		if (finalWords.length && finalWords.length < options.maxWords) {
 			$ul.html('')
 				.css('display', 'inline-block')
 				.data({
