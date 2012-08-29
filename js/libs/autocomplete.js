@@ -105,7 +105,11 @@ $.fn.autocomplete = function (options) {
 		// the last part.
 		text = text.slice(0, data.cursor - data.word.length) +
 			value + text.slice(data.cursor);
-		$textarea.val(text);
+		$textarea.val(text)
+			.focus();
+
+		data.cursor += value.length - data.word.length;
+		$textarea.get(0).selectionStart = data.cursor;
 
 		$this.parent('ul').hide();
 	});
