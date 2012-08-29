@@ -62,6 +62,15 @@ $.fn.autocomplete = function (options) {
 			return;
 		}
 
+		if (options.operator) {
+			if (value.indexOf(options.operator) !== 0) {
+				$ul.hide();
+				return;
+			}
+
+			value = value.slice(1);
+		}
+
 		$.each(options.words, function (i, word) {
 			if ((options.caseSensitive && word.indexOf(value) === 0) ||
 				word.toLowerCase().indexOf(value.toLowerCase()) === 0) {
