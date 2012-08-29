@@ -96,6 +96,17 @@ $.fn.autocomplete = function (options) {
 		}
 	});
 
+	// When tab is pressed, complete if possible
+	this.keydown(function (e) {
+		if (e.keyCode === 9 && $('#autocomplete-ul').is(':visible')) {
+			e.preventDefault();
+
+			if ($('#autocomplete-ul li').length === 1) {
+				$('#autocomplete-ul li').click();
+			}
+		}
+	});
+
 	if (!$('#autocomplete-ul').length) {
 		$('<ul id="autocomplete-ul"></ul>').appendTo('body');
 	}
