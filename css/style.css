@@ -1,0 +1,17 @@
+label {
+	display: block;
+	text-align: center;
+}
+
+label:after {
+	content: ':';
+}
+
+textarea {
+	display: block;
+	margin: 0 auto;
+	margin-top: 5px;
+	margin-bottom: 40px;
+	width: 400px;
+	height: 100px;
+}
