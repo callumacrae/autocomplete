@@ -30,19 +30,16 @@ $.fn.autocomplete = function (options) {
 	}, options);
 
 	// STEAK
-	this.keyup(function (e) {
+	this.keypress(function (e) {
 		var $this = $(this),
-			code = e.keyCode,
 			cursor = this.selectionStart,
 			finalWords = [],
 			$ul = $('#autocomplete-ul'),
 			value = $this.val();
 
-		// If not alphanumeric, return
-		if ((code < 65 || code > 90) && (code < 48 || code > 57)) {
-			$ul.hide();
-			return;
-		}
+		value = value.slice(0, cursor) + String.fromCharCode(e.charCode) +
+			value.slice(cursor);
+		cursor++;
 
 		// Internet Explorer is not worthy of my time
 		if (typeof cursor === 'undefined') {
@@ -97,8 +94,8 @@ $.fn.autocomplete = function (options) {
 		}
 	});
 
-	// When tab is pressed, complete if possible
 	this.keydown(function (e) {
+		// When tab is pressed, complete if possible
 		if (e.keyCode === 9 && $('#autocomplete-ul').is(':visible')) {
 			e.preventDefault();
 
