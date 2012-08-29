@@ -57,12 +57,6 @@ $.fn.autocomplete = function (options) {
 
 		value = value.slice(value.lastIndexOf(' ', cursor - 1) + 1, cursor);
 
-		// nub
-		if (!value) {
-			$ul.hide();
-			return;
-		}
-
 		if (options.operator) {
 			if (value.indexOf(options.operator) !== 0) {
 				$ul.hide();
@@ -70,6 +64,12 @@ $.fn.autocomplete = function (options) {
 			}
 
 			value = value.slice(1);
+		}
+
+		// If too short, kill here
+		if (value.length < options.minChars) {
+			$ul.hide();
+			return;
 		}
 
 		$.each(options.words, function (i, word) {

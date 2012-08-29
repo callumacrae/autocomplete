@@ -5,6 +5,7 @@ $('#basic').autocomplete(words);
 
 $('#operator').autocomplete({
 	caseSensitive: true,
+	minChars: 2,
 	operator: '@',
 	words: words
 });
