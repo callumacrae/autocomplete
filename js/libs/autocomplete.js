@@ -129,6 +129,7 @@ $.fn.autocomplete = function (options) {
 		var $this = $(this),
 			data = $this.parent('ul').data(),
 			text = $textarea.val(),
+			oldText = text,
 			value = $this.text();
 
 		// This event is for another form :-(
@@ -142,7 +143,12 @@ $.fn.autocomplete = function (options) {
 			value + text.slice(data.cursor);
 
 		if ($.isFunction(options.callback)) {
-			options.callback.call(this, value, $textarea.val(), text);
+			options.callback.call(this, value, oldText, text);
+		}
+
+		if (oldText.length === data.cursor) {
+			text += ' ';
+			data.cursor++;
 		}
 
 		$textarea.val(text)
@@ -150,6 +156,7 @@ $.fn.autocomplete = function (options) {
 
 		data.cursor += value.length - data.word.length;
 		$textarea.get(0).selectionStart = data.cursor;
+		$textarea.get(0).selectionEnd = data.cursor;
 
 		$this.parent('ul').hide();
 	});
