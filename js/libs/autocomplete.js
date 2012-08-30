@@ -95,8 +95,19 @@ $.fn.autocomplete = function (options) {
 	});
 
 	this.keydown(function (e) {
+		if ($('#autocomplete-ul').is(':hidden')) {
+			return;
+		}
+
+		// When a key is pressed that will move the cursor but not fire the
+		// keypress event, hide the ul
+		if ([37, 38, 39, 40, 46].indexOf(e.keyCode) !== -1) {
+			$('#autocomplete-ul').hide();
+			return;
+		}
+
 		// When tab is pressed, complete if possible
-		if (e.keyCode === 9 && $('#autocomplete-ul').is(':visible')) {
+		if (e.keyCode === 9) {
 			e.preventDefault();
 
 			if ($('#autocomplete-ul li').length === 1) {
@@ -104,6 +115,11 @@ $.fn.autocomplete = function (options) {
 			}
 		}
 	});
+
+	this.click(function () {
+		$('#autocomplete-ul').hide();
+	});
+
 
 	if (!$('#autocomplete-ul').length) {
 		$('<ul id="autocomplete-ul"></ul>').appendTo('body');
